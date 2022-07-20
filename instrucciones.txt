@@ -1,0 +1,37 @@
+
+1. Crear proyecto:
+rails new proyecto_final
+cd proyecto_final
+
+2. En config/initializers/inflections.rb pegamos el código de GitHub para programar en español.
+
+3. Incluir la gem "devise" en Gemfile siguiendo todos sus pasos.
+
+4. Creamos tablas de  Usuario con devise:
+
+rails g devise Usuario nombre:integer telefono:string email:string direccion:string
+rails g model Rol rol:string usuario:references
+rails g migration CreateJoinTablaUsuarioRol usuario rol
+
+5. Revisamos las migraciones
+rails db:migrate
+
+6. En los modelos revisar que todo esté bien, y sus relaciones, HABTM:
+
+rol.rb:
+class Rol < ApplicationRecord
+  belongs_to :usuario
+end
+
+usuario.rb:
+class Usuario < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+  has_many :roles
+end
+
+
+
+
+
+
